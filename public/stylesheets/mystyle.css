@@ -1,0 +1,35 @@
+#predict{
+    position: relative;
+    top: 50%;
+    left: 45%;
+    background-color: hsl(122, 39%, 49%); /* Green */
+    border: none;
+    border-radius: 15px;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+} 
+#predict:disabled{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: white;
+}
+
+#result{
+  border: 1px solid black;
+  padding: 50px;
+  margin-top: 50px;
+}
+
+#predicted{
+  background-color:#d6f5f9;
+  color: blue;
+}
+
+#orignal{
+  background-color: #9ba863;
+  color: white;
+}
