@@ -6,10 +6,15 @@ const path = require('path');
 const { spawn } = require('child_process');
 const fs = require('fs');
 
+if (!fs.existsSync('./temp')) {
+  fs.mkdirSync('./temp');
+}
+
 // Spawed the python script
 let p = spawn('python', ['python/script.py'], { stdio: ['pipe', 'pipe', process.stderr] });
 //piped the stdout to outStream
 console.log(`spawned with pid ${p.pid}`);
+
 
 let w = fs.createWriteStream('./temp/out_' + ts + '.txt');
 p.stdout.pipe(w);

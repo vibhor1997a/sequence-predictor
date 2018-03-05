@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sequence Predictor</title>
+    <link rel="stylesheet" href="\bower_components\materialize\dist\css\materialize.min.css">
+    <link rel="stylesheet" href="\stylesheets\mystyle.css">
+</head>
+
+<body class="cyan lighten-5">
+    <div class="container">
+        <h2 class="blue-text text-darken-2 center-align">Sequence Predictor</h1>
+            <input type="text" id="seq">
+            <input type="submit" value="predict" id="predict" disabled>
+            <div id="result" hidden>
+                <span id="orignal"></span>
+                <span id="predicted"></span>
+            </div>
+    </div>
+    <script src="bower_components\jquery\dist\jquery.min.js"></script>
+    <script src="javascripts\verify.js"></script>
+</body>
+
+</html>
