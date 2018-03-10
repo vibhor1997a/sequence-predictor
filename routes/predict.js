@@ -4,7 +4,6 @@ const router = express.Router();
 const path = require('path');
 const { spawn } = require('child_process');
 const fs = require('fs');
-let str = "";
 
 if (!fs.existsSync('./Logs')) {
   fs.mkdirSync('./Logs');
@@ -23,6 +22,7 @@ p.stdout.pipe(w);
 router.get('/', managePredictor);
 
 function managePredictor(req, res, next) {
+  let str = "";
   try {
     //timestamp
     let ts = new Date().getTime();
