@@ -23,15 +23,15 @@
   position: relative;
   top: 50px;
   border: 3px dashed black;
-  height: 220px;
+  height: auto;
 }
 
 #predicted>span{
   background-color:#d6f5f9;
   color: blue;
   border: 2px dashed #b37272;
-  font-size: 18px;
-  padding-right: 5px !important;
+  font-size: 20px;
+  padding-left: 5px !important;
 }
 
 #orignal>span{
@@ -41,5 +41,13 @@
 }
 
 #predicted{
-  float: left;
+  display: inline-block;
+}
+
+#orignal{
+  display: inline-block;
+}
+
+#result{
+  text-align: center !important;
 }
