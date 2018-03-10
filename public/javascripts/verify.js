@@ -31,8 +31,8 @@ btn.addEventListener('click', () => {
         if (xhr.readyState === DONE) {
             if (xhr.status === OK) {
                 let o = JSON.parse(xhr.responseText);
-                let orignal = document.getElementById('orignal');
-                let predicted = document.getElementById('predicted');
+                let orignal = document.querySelector('#orignal > span');
+                let predicted = document.querySelector('#predicted > span');
                 orignal.innerHTML = o.orignal.join(',&nbsp;') + ',';
                 predicted.innerHTML = '&nbsp;' + o.predicted.join(',&nbsp;');
                 document.getElementById('result').removeAttribute('hidden');
