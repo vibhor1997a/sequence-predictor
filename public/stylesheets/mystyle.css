@@ -21,7 +21,6 @@
   padding: 20px;
   margin-top: 30px;
   position: relative;
-  left: 150px;
   top: 100px;
   border: 3px dashed black;
 }
@@ -30,7 +29,7 @@
   background-color:#d6f5f9;
   color: blue;
   border: 2px dashed #b37272;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 #orignal>span{
