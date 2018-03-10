@@ -376,9 +376,12 @@ def findNextn(arr, n):
 
 # This script gives about 0.22 as a final result. It took 24 hours to prepare prefix tree and 1 hour to predict next elements for test sequences. The resulting file contains about 44 % of filled rows. So, about a half of the answers are correct. A Java port of this script is not finished yet but it seems to work for just several minutes.
 while True:
+    ts = input()
     inp = input()
     arr = inp.split(" ")
     arr = list(map(lambda x: int(x), arr))
     qq = findNextn(arr, 5)
+    print(ts)
     out = json.dumps({'orignal': arr, 'predicted':qq}, indent=4)
-    print(out)    
+    print(out)
+    print(ts)    

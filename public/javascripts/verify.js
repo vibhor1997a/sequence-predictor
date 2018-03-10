@@ -1,5 +1,5 @@
 let txt = document.getElementById('seq');
-let re = /^\s*\d+(?:(?:\s*,\s*|\s)\d*){11,}\d+\s*$/g;
+let re = /^\s*(?:-\d|\d)+(?:(?:\s*,\s*|\s)(?:-\d|\d)*){11,}(?:-\d|\d)+\s*$/g;
 let re1 = /(?:\s*,\s*|\s+)/g;
 let btn = document.getElementById('predict');
 // check fuction is invoked every second
