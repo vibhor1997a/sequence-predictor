@@ -1,13 +1,13 @@
-//timestamp
-let ts = new Date().getTime();
+let ts1 = new Date().getTime();
 const express = require('express');
 const router = express.Router();
 const path = require('path');
 const { spawn } = require('child_process');
 const fs = require('fs');
+let str = "";
 
-if (!fs.existsSync('./temp')) {
-  fs.mkdirSync('./temp');
+if (!fs.existsSync('./Logs')) {
+  fs.mkdirSync('./Logs');
 }
 
 // Spawed the python script
@@ -16,52 +16,46 @@ let p = spawn('python', ['python/script.py'], { stdio: ['pipe', 'pipe', process.
 console.log(`spawned with pid ${p.pid}`);
 
 
-let w = fs.createWriteStream('./temp/out_' + ts + '.txt');
+let w = fs.createWriteStream('./Logs/log' + ts1 + '.txt');
 p.stdout.pipe(w);
 
 /* Route '/predict' to predict the seq */
-router.get('/', function (req, res, next) {
-  let seq = req.query.seq;
-  console.log(req.query);
-  managePredictor(seq, (err, o) => {
-    res.send(JSON.stringify(o, null, 4));
-    console.log(JSON.stringify(o, null, 4));
-  });
-});
+router.get('/', managePredictor);
 
-/**
- * Manages the predictor in python already running
- * Passes the Object in the callback if exists or null and error or null
- * @param {string} seq 
- * @param {*} callback 
- */
-function managePredictor(seq, callback) {
-  p.stdin.write(seq + '\n');
-  let re = /{[^{}]*}$/g;
-  let i = 4;
-  let t = setInterval(reader, 1000);
-  function reader() {
-    i--;
-    fs.readFile('./temp/out_' + ts + '.txt', 'utf-8', (err, str) => {
-      str = str.trim();
-      let o = str.match(re);
-      if (err) {
-        callback(err);
-        clearInterval(t);
-      }
-      else {
-        if (o) {
-          callback(null, JSON.parse(o));
-          clearInterval(t);
-        }
-        else {
-          if (i <= 0) {
-            clearInterval(t);
-          }
-        }
-      }
+function managePredictor(req, res, next) {
+  try {
+    //timestamp
+    let ts = new Date().getTime();
+    let token = ts + '_' + magic();
+    let seq = req.query.seq;
+    let re = new RegExp(token + '((?:\\s|\\S)*)' + token);
+    w.write(token + '\n' + seq + '\n');
+    p.stdin.write(token + '\n' + seq + '\n');
+    p.stdout.once('data', (chunk) => {
+      str += chunk;
+      let s = re.exec(str);
+      res.send(JSON.parse(s[1]));
     });
   }
+  catch (err) {
+    res.status(500).send('Internal Server Error');
+  }
+}
+
+/** 
+ * returns a random token of length b/w 5-7 with some magic sauce
+ * @returns {string}
+*/
+function magic() {
+  let charSet = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  //5-7
+  let n = Math.ceil(Math.random() * 3) + 4;
+  let s = '';
+  for (let i = 0; i < n; i++) {
+    //concatenate a random char from the charSet
+    s += charSet.charAt(Math.floor(Math.random() * charSet.length));
+  }
+  return s;
 }
 
 module.exports = router;
