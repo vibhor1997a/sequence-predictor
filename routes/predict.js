@@ -32,6 +32,7 @@ function managePredictor(req, res, next) {
     w.write(token + '\n' + seq + '\n');
     p.stdin.write(token + '\n' + seq + '\n');
     p.stdout.once('data', (chunk) => {
+      console.log(str);
       str += chunk;
       let s = re.exec(str);
       res.send(JSON.parse(s[1]));
