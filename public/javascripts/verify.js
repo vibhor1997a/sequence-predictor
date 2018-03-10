@@ -21,7 +21,6 @@ function check() {
 btn.addEventListener('click', () => {
     let s = txt.value;
     s = s.split(re1).filter(x => (x != '') ? true : false).join(' ');
-    console.log(s);
     let xhr = new XMLHttpRequest();
     xhr.open('GET', '/predict?seq=' + encodeURIComponent(s));
     xhr.setRequestHeader('Content-Type', 'application/json');
@@ -37,8 +36,10 @@ btn.addEventListener('click', () => {
                 predicted.innerHTML = '&nbsp;' + o.predicted.join(',&nbsp;');
                 document.getElementById('result').removeAttribute('hidden');
                 document.getElementById('error').setAttribute('hidden','true');
+                console.log(o);
             }
             else {
+                console.log('Something went Wrong :(');
                 console.log('Error: ' + xhr.status); // An error occurred during the request.
                 document.getElementById('result').setAttribute('hidden','true');
                 document.getElementById('error').removeAttribute('hidden');
