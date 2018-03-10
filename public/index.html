@@ -15,15 +15,18 @@
         <h2 class="blue-text text-darken-2 center-align">Sequence Predictor</h1>
             <input type="text" id="seq">
             <input type="submit" value="predict" id="predict" disabled>
-            <div id="result" class="container row" hidden>
-                <div id="orignal" class="col s6 offset-s1">
-                    <h5 class="center-align">Orignal</h5>
+            <div id="result" hidden>
+                <div id="orignal" class="">
+                    <h5 class="center-align">Orignal:</h5>
                     <span></span>
                 </div>
                 <div id="predicted">
-                    <h5 class="center-align" class="col s6">Predicted</h5>
+                    <h5 class="center-align">Predicted:</h5>
                     <span></span>
                 </div>
+            </div>
+            <div id="error" hidden>
+                <h4 class="center-align">Something went Wrong :(</h4>
             </div>
     </div>
     <script src="bower_components\jquery\dist\jquery.min.js"></script>
