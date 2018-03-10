@@ -4,6 +4,7 @@ const router = express.Router();
 const path = require('path');
 const { spawn } = require('child_process');
 const fs = require('fs');
+let str = "";
 
 if (!fs.existsSync('./Logs')) {
   fs.mkdirSync('./Logs');
@@ -22,7 +23,6 @@ p.stdout.pipe(w);
 router.get('/', managePredictor);
 
 function managePredictor(req, res, next) {
-  let str = "";
   try {
     //timestamp
     let ts = new Date().getTime();
@@ -31,12 +31,36 @@ function managePredictor(req, res, next) {
     let re = new RegExp(token + '((?:\\s|\\S)*)' + token);
     w.write(token + '\n' + seq + '\n');
     p.stdin.write(token + '\n' + seq + '\n');
-    p.stdout.once('data', (chunk) => {
-      str += chunk;
-      let s = re.exec(str);
-      console.log(str);
-      res.send(JSON.parse(s[1]));
+    handle(5, (err, o) => {
+      if (err) {
+        res.status(500).send('Internal Server Error!');
+      }
+      else {
+        res.send(o);
+      }
     });
+    /**
+     * Handles the stdout
+     * @param {Number} counter 
+     * @param {*} callback 
+     */
+    function handle(counter, callback) {
+      if (counter > 0) {
+        p.stdout.once('data', (chunk) => {
+          str += chunk;
+          let r = re.exec(str);
+          if (r) {
+            callback(null, JSON.parse(r[1]));
+          }
+          else {
+            handle(counter - 1, callback);
+          }
+        });
+      }
+      else {
+        callback(new Error('stack size exceeded'));
+      }
+    }
   }
   catch (err) {
     res.status(500).send('Internal Server Error');
@@ -58,5 +82,6 @@ function magic() {
   }
   return s;
 }
+
 
 module.exports = router;

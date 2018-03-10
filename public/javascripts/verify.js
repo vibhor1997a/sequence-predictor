@@ -36,9 +36,12 @@ btn.addEventListener('click', () => {
                 orignal.innerHTML = o.orignal.join(',&nbsp;') + ',';
                 predicted.innerHTML = '&nbsp;' + o.predicted.join(',&nbsp;');
                 document.getElementById('result').removeAttribute('hidden');
+                document.getElementById('error').setAttribute('hidden','true');
             }
             else {
                 console.log('Error: ' + xhr.status); // An error occurred during the request.
+                document.getElementById('result').setAttribute('hidden','true');
+                document.getElementById('error').removeAttribute('hidden');
             }
         }
     }
