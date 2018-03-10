@@ -11,12 +11,11 @@ if (!fs.existsSync('./Logs')) {
 }
 
 // Spawed the python script
-let p = spawn('python', ['python/script.py'], { stdio: ['pipe', 'pipe', process.stderr] });
-//piped the stdout to outStream
+let p = spawn('python', ['python/script.py']);
 console.log(`spawned with pid ${p.pid}`);
 
-
 let w = fs.createWriteStream('./Logs/log' + ts1 + '.txt');
+p.stderr.pipe(w);
 p.stdout.pipe(w);
 
 /* Route '/predict' to predict the seq */
