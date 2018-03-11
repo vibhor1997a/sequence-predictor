@@ -28,7 +28,6 @@ function managePredictor(req, res, next) {
     let token = ts + '_' + magic();
     let seq = req.query.seq;
     let re = new RegExp(token + '((?:\\s|\\S)*)' + token);
-    w.write(token + '\n' + seq + '\n');
     p.stdin.write(token + '\n' + seq + '\n');
     handle(5, (err, o) => {
       if (err) {
