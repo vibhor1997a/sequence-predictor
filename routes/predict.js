@@ -1,4 +1,4 @@
-let ts1 = new Date().getTime();
+// let ts1 = new Date().getTime();
 const express = require('express');
 const router = express.Router();
 const path = require('path');
@@ -6,17 +6,18 @@ const { spawn } = require('child_process');
 const fs = require('fs');
 let str = "";
 
-if (!fs.existsSync('./tmp')) {
+/* if (!fs.existsSync('./tmp')) {
   fs.mkdirSync('./tmp');
 }
-
+ */
 // Spawed the python script
 let p = spawn('python', ['python/script.py']);
 console.log(`spawned with pid ${p.pid}`);
 
-let w = fs.createWriteStream('./tmp/log' + ts1 + '.txt');
+/* let w = fs.createWriteStream('./tmp/log' + ts1 + '.txt');
 p.stderr.pipe(w);
 p.stdout.pipe(w);
+ */
 
 /* Route '/predict' to predict the seq */
 router.get('/', managePredictor);
